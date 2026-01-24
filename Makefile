@@ -1,4 +1,5 @@
-.PHONY: start stop restart logs build clean
+.PHONY: help start stop restart logs build clean
+.DEFAULT_GOAL := help
 
 # Rainbow gradient colors (256-color palette)
 define print_logo
@@ -9,6 +10,21 @@ define print_logo
 	@printf '\033[38;5;39m ██████╔╝██║  ██║██║ ╚████╔╝ ███████╗   ██║   ██║██║ ╚═╝ ██║███████╗\033[0m\n'
 	@printf '\033[38;5;171m ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝  ╚══════╝   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝\033[0m\n'
 endef
+
+# Show help
+help:
+	$(call print_logo)
+	@echo ""
+	@echo "Usage: make [target]"
+	@echo ""
+	@echo "Targets:"
+	@echo "  start    Start the application in detached mode"
+	@echo "  stop     Stop the application"
+	@echo "  restart  Restart the application"
+	@echo "  logs     View logs (follow mode)"
+	@echo "  build    Build/rebuild the Docker image"
+	@echo "  clean    Stop and remove volumes (clean slate)"
+	@echo "  help     Show this help message"
 
 # Start the application in detached mode
 start:
