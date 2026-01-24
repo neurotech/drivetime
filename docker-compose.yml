@@ -1,0 +1,13 @@
+services:
+  drivetime:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - drivetime-data:/app/data
+    environment:
+      - DATABASE_PATH=/app/data/drivetime.db
+    restart: unless-stopped
+
+volumes:
+  drivetime-data:
