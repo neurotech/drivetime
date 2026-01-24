@@ -1,4 +1,4 @@
-.PHONY: help start stop restart logs build clean
+.PHONY: help start stop restart logs build rebuild clean
 .DEFAULT_GOAL := help
 
 # Rainbow gradient colors (256-color palette)
@@ -23,6 +23,7 @@ help:
 	@echo "  restart  Restart the application"
 	@echo "  logs     View logs (follow mode)"
 	@echo "  build    Build/rebuild the Docker image"
+	@echo "  rebuild  Stop containers and rebuild the image"
 	@echo "  clean    Stop and remove volumes (clean slate)"
 	@echo "  help     Show this help message"
 
@@ -48,6 +49,9 @@ logs:
 # Build/rebuild the image
 build:
 	docker compose build
+
+# Stop containers and rebuild the image
+rebuild: stop build
 
 # Stop and remove volumes (clean slate)
 clean:
