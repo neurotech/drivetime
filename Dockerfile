@@ -26,6 +26,11 @@ COPY --from=builder /app/src/db/migrations ./src/db/migrations
 # Copy better-sqlite3 native module
 COPY --from=builder /app/node_modules/.pnpm/**/better-sqlite3 ./node_modules/better-sqlite3
 
+# Copy migration script and entrypoint
+COPY --from=builder /app/scripts/migrate.mjs ./scripts/migrate.mjs
+COPY --from=builder /app/docker-entrypoint.sh ./docker-entrypoint.sh
+RUN chmod +x ./docker-entrypoint.sh
+
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
