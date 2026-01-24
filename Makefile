@@ -1,7 +1,18 @@
 .PHONY: start stop restart logs build clean
 
+define LOGO
+ ██████╗ ██████╗ ██╗██╗   ██╗███████╗████████╗██╗███╗   ███╗███████╗
+ ██╔══██╗██╔══██╗██║██║   ██║██╔════╝╚══██╔══╝██║████╗ ████║██╔════╝
+ ██║  ██║██████╔╝██║██║   ██║█████╗     ██║   ██║██╔████╔██║█████╗
+ ██║  ██║██╔══██╗██║╚██╗ ██╔╝██╔══╝     ██║   ██║██║╚██╔╝██║██╔══╝
+ ██████╔╝██║  ██║██║ ╚████╔╝ ███████╗   ██║   ██║██║ ╚═╝ ██║███████╗
+ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝  ╚══════╝   ╚═╝   ╚═╝╚═╝     ╚═╝╚══════╝
+endef
+export LOGO
+
 # Start the application in detached mode
 start:
+	@echo "$$LOGO"
 	docker compose up -d
 
 # Stop the application
@@ -10,6 +21,7 @@ stop:
 
 # Restart the application
 restart:
+	@echo "$$LOGO"
 	docker compose down
 	docker compose up -d
 
