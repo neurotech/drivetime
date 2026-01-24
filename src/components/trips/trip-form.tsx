@@ -45,8 +45,8 @@ export function TripForm({
       : {
           startLocation: "",
           endLocation: "",
-          startKilometres: defaultStartKilometres ?? 0,
-          endKilometres: defaultStartKilometres ?? 0,
+          startKilometres: defaultStartKilometres,
+          endKilometres: defaultStartKilometres,
           notes: "",
         },
   });
@@ -111,6 +111,7 @@ export function TripForm({
             id="startKilometres"
             type="number"
             step="1"
+            placeholder="0"
             aria-invalid={!!errors.startKilometres}
             aria-describedby={
               errors.startKilometres ? "startKilometres-error" : undefined
@@ -129,6 +130,7 @@ export function TripForm({
             id="endKilometres"
             type="number"
             step="1"
+            placeholder="0"
             aria-invalid={!!errors.endKilometres}
             aria-describedby={
               errors.endKilometres ? "endKilometres-error" : undefined
