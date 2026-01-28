@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import { readFileSync, existsSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { join } from "path";
 
 const dbPath = process.env.DATABASE_PATH || "drivetime.db";
@@ -27,7 +27,10 @@ if (!existsSync(journalPath)) {
 
 const journal = JSON.parse(readFileSync(journalPath, "utf-8"));
 const appliedMigrations = new Set(
-  db.prepare("SELECT hash FROM __drizzle_migrations").all().map((r) => r.hash)
+  db
+    .prepare("SELECT hash FROM __drizzle_migrations")
+    .all()
+    .map((r) => r.hash),
 );
 
 let applied = 0;
@@ -48,10 +51,9 @@ for (const entry of journal.entries) {
   console.log(`Applying migration: ${hash}`);
 
   db.exec(sql);
-  db.prepare("INSERT INTO __drizzle_migrations (hash, created_at) VALUES (?, ?)").run(
-    hash,
-    Date.now()
-  );
+  db.prepare(
+    "INSERT INTO __drizzle_migrations (hash, created_at) VALUES (?, ?)",
+  ).run(hash, Date.now());
   applied++;
 }
 
