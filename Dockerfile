@@ -10,6 +10,9 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm build
 
+# Copy better-sqlite3 to a predictable location for the runner stage
+RUN cp -r $(find node_modules/.pnpm -type d -name "better-sqlite3" -path "*/node_modules/*" | head -1) /tmp/better-sqlite3
+
 # Production stage - minimal runtime
 FROM base AS runner
 WORKDIR /app
@@ -24,7 +27,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/src/db/migrations ./src/db/migrations
 
 # Copy better-sqlite3 native module
-COPY --from=builder /app/node_modules/.pnpm/**/better-sqlite3 ./node_modules/better-sqlite3
+COPY --from=builder /tmp/better-sqlite3 ./node_modules/better-sqlite3
 
 # Copy migration script and entrypoint
 COPY --from=builder /app/scripts/migrate.mjs ./scripts/migrate.mjs
